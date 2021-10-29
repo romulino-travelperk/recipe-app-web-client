@@ -14,13 +14,13 @@ describe('local storage auth', () => {
     const fakeLocalStorage = {
       [authDataKeys.token]: 'someToken',
       [authDataKeys.email]: 'anemail@somedomain.com',
-      [authDataKeys.userName]: 'some user name',
+      [authDataKeys.name]: 'some user name',
     }
 
     // eslint-disable-next-line no-proto
     jest.spyOn(window.localStorage.__proto__, 'setItem')
 
-    const fakeLocalStorageGet = jest.fn(function (item) {
+    const fakeLocalStorageGet = jest.fn((item) => {
       return fakeLocalStorage[item]
     })
     // eslint-disable-next-line no-proto
@@ -28,9 +28,9 @@ describe('local storage auth', () => {
 
     const authData = getAuthDataFromLocalStorage()
     expect(fakeLocalStorageGet).toHaveBeenCalledTimes(3)
-    expect(authData.token).toEqual(fakeLocalStorage.token)
-    expect(authData.email).toEqual(fakeLocalStorage.email)
-    expect(authData.userName).toEqual(fakeLocalStorage.userName)
+    expect(authData.token).toEqual(fakeLocalStorage[authDataKeys.token])
+    expect(authData.email).toEqual(fakeLocalStorage[authDataKeys.email])
+    expect(authData.name).toEqual(fakeLocalStorage[authDataKeys.name])
   })
 
   it('sets auth data in localstorage', () => {
@@ -46,15 +46,15 @@ describe('local storage auth', () => {
     window.localStorage.__proto__.setItem = fakeLocalStorageSet
 
     const authDataToSave = {
-      userName: 'Some Name',
+      name: 'Some Name',
       email: 'name@domain.com',
       token: 'a-secret-token',
     }
     setAuthDataInLocalStorage(authDataToSave)
 
     expect(fakeLocalStorageSet).toHaveBeenCalledTimes(3)
-    expect(fakeLocalStorage.token).toEqual(authDataToSave.token)
-    expect(fakeLocalStorage.email).toEqual(authDataToSave.email)
-    expect(fakeLocalStorage.userName).toEqual(authDataToSave.userName)
+    expect(fakeLocalStorage[authDataKeys.token]).toEqual(authDataToSave.token)
+    expect(fakeLocalStorage[authDataKeys.email]).toEqual(authDataToSave.email)
+    expect(fakeLocalStorage[authDataKeys.name]).toEqual(authDataToSave.name)
   })
 })

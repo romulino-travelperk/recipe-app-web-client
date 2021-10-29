@@ -1,19 +1,19 @@
 const authDataKeys = {
-  userName: 'userName',
-  token: 'token',
-  email: 'email',
+  name: 'auth.name',
+  token: 'auth.token',
+  email: 'auth.email',
 }
 
 function getAuthDataFromLocalStorage() {
   return {
-    userName: localStorage.getItem(authDataKeys.userName),
+    name: localStorage.getItem(authDataKeys.name),
     token: localStorage.getItem(authDataKeys.token),
     email: localStorage.getItem(authDataKeys.email),
   }
 }
 
-function setAuthDataInLocalStorage({ userName, token, email }) {
-  localStorage.setItem(authDataKeys.userName, userName)
+function setAuthDataInLocalStorage({ name, token, email }) {
+  localStorage.setItem(authDataKeys.name, name)
   localStorage.setItem(authDataKeys.token, token)
   localStorage.setItem(authDataKeys.email, email)
 }
