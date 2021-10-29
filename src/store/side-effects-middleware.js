@@ -3,11 +3,12 @@ let sideEffectsMap = {}
 function applySideEffectsMiddleware(dispatch) {
   return function (action) {
     sideEffectsMap[action.type]?.before?.forEach((sideEffect) => {
-      sideEffect(action, dispatch)
+      sideEffect(action, applySideEffectsMiddleware(dispatch))
     })
+
     dispatch(action)
     sideEffectsMap[action.type]?.after?.forEach((sideEffect) => {
-      sideEffect(action, dispatch)
+      sideEffect(action, applySideEffectsMiddleware(dispatch))
     })
   }
 }

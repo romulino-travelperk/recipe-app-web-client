@@ -9,8 +9,8 @@ import {
   setAuthDataInLocalStorage,
 } from './local-storage-auth'
 
-describe('local storage auth', () => {
-  it('gets auth data from localstorage', () => {
+describe('local storage authentication', () => {
+  it('gets authentication data from localstorage', () => {
     const fakeLocalStorage = {
       [authDataKeys.token]: 'someToken',
       [authDataKeys.email]: 'anemail@somedomain.com',
@@ -33,7 +33,7 @@ describe('local storage auth', () => {
     expect(authData.name).toEqual(fakeLocalStorage[authDataKeys.name])
   })
 
-  it('sets auth data in localstorage', () => {
+  it('sets authentication data in localstorage', () => {
     // eslint-disable-next-line no-proto
     jest.spyOn(window.localStorage.__proto__, 'setItem')
 

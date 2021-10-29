@@ -1,7 +1,7 @@
 const authDataKeys = {
   name: 'auth.name',
-  token: 'auth.token',
-  email: 'auth.email',
+  token: 'authentication.token',
+  email: 'authentication.email',
 }
 
 function getAuthDataFromLocalStorage() {

@@ -1,17 +1,17 @@
 import {
   getAuthDataFromLocalStorage,
   setAuthDataInLocalStorage,
-} from './local-storage/local-storage-auth'
+} from '../../local-storage/local-storage-auth'
 
 import axios from 'axios'
-import apiUrls from '../urls/api-urls'
-import appErrors from '../errors/appErrors'
-import authenticateUserActions from './authenticate-user-actions'
+import apiUrls from '../../../urls/api-urls'
+import appErrors, { appErrorFor } from '../../../errors/appErrors'
+import authenticateUserActions from '../../authenticate-user-actions'
 
 const success = authenticateUserActions.success
 const failure = authenticateUserActions.failure
 
-async function authenticationIntentionSideEffect(action, dispatch) {
+async function authenticateUserIntentionSideEffect(action, dispatch) {
   const localAuthData = getAuthDataFromLocalStorage()
   const hasCredentialsPayload = action.payload.email && action.payload.password
   if (localAuthData.token && !hasCredentialsPayload) {
@@ -64,11 +64,11 @@ async function authenticationIntentionSideEffect(action, dispatch) {
       dispatch(
         failure({
           origin: 'client',
-          error: error.message,
+          error: appErrorFor(error.message),
         })
       )
     }
   }
 }
 
-export default authenticationIntentionSideEffect
+export default authenticateUserIntentionSideEffect

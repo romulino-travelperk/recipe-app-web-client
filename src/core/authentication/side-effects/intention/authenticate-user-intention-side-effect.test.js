@@ -3,20 +3,19 @@
 // For more information see:
 // https://github.com/facebook/jest/issues/6798 and https://github.com/jsdom/jsdom/issues/2318
 
-import authenticationIntentionSideEffect from './authentication-intention-side-effect'
+import authenticateUserIntentionSideEffect from './authenticate-user-intention-side-effect'
 
 import {
   getAuthDataFromLocalStorage,
   setAuthDataInLocalStorage,
-} from './local-storage/local-storage-auth'
+} from '../../local-storage/local-storage-auth'
 
-import apiUrls from '../urls/api-urls'
-import appErrors from '../errors/appErrors'
-import authenticateUserActions from './authenticate-user-actions'
+import apiUrls from '../../../urls/api-urls'
+import appErrors from '../../../errors/appErrors'
+import authenticateUserActions from '../../authenticate-user-actions'
 
 const axios = require('axios')
 const MockAdapter = require('axios-mock-adapter')
-// This sets the mock adapter on the default instance
 const axiosMock = new MockAdapter(axios)
 
 describe('authentication intention side effect', () => {
@@ -52,7 +51,7 @@ describe('authentication intention side effect', () => {
       email: userEmail,
       token: authToken,
     })
-    authenticationIntentionSideEffect(
+    authenticateUserIntentionSideEffect(
       authenticateUserActions.intention(),
       dispatch
     )
@@ -81,7 +80,7 @@ describe('authentication intention side effect', () => {
       name: userName,
     })
 
-    await authenticationIntentionSideEffect(
+    await authenticateUserIntentionSideEffect(
       authenticateUserActions.intention(loginCredentials),
       dispatch
     )
@@ -128,7 +127,7 @@ describe('authentication intention side effect', () => {
       name: userName,
     })
 
-    await authenticationIntentionSideEffect(
+    await authenticateUserIntentionSideEffect(
       authenticateUserActions.intention(loginCredentials),
       dispatch
     )
@@ -157,7 +156,7 @@ describe('authentication intention side effect', () => {
   })
 
   it('fails when there is no token in localstorage and no credentials in action payload', async () => {
-    await authenticationIntentionSideEffect(
+    await authenticateUserIntentionSideEffect(
       authenticateUserActions.intention(),
       dispatch
     )
@@ -183,7 +182,7 @@ describe('authentication intention side effect', () => {
       })
       .reply(400, badRequestResponseData)
 
-    await authenticationIntentionSideEffect(
+    await authenticateUserIntentionSideEffect(
       authenticateUserActions.intention(badLoginCredentials),
       dispatch
     )
@@ -204,14 +203,14 @@ describe('authentication intention side effect', () => {
       })
       .networkError()
 
-    await authenticationIntentionSideEffect(
+    await authenticateUserIntentionSideEffect(
       authenticateUserActions.intention(loginCredentials),
       dispatch
     )
 
     expect(dispatch).toHaveBeenCalledWith(
       authenticateUserActions.failure({
-        error: 'Network Error',
+        error: appErrors.NETWORK_ERROR,
         origin: 'client',
       })
     )
@@ -225,14 +224,14 @@ describe('authentication intention side effect', () => {
       })
       .timeout()
 
-    await authenticationIntentionSideEffect(
+    await authenticateUserIntentionSideEffect(
       authenticateUserActions.intention(loginCredentials),
       dispatch
     )
 
     expect(dispatch).toHaveBeenCalledWith(
       authenticateUserActions.failure({
-        error: 'timeout of 0ms exceeded',
+        error: appErrors.CONNECTION_TIMED_OUT,
         origin: 'client',
       })
     )

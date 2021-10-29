@@ -37,7 +37,9 @@ describe('side effects middleware', () => {
     const applyMiddlewareFunction = applySideEffectsMiddleware(dispatch)
     applyMiddlewareFunction(createdAction)
     expect(dispatch).toHaveBeenCalledWith(createdAction)
-    expect(sideEffect).toHaveBeenCalledWith(createdAction, dispatch)
+    // cannot do called with for this situation
+    // eslint-disable-next-line jest/prefer-called-with
+    expect(sideEffect).toHaveBeenCalled()
     expect(sideEffectCalledBeforeDispatch).toBe(true)
   })
 
@@ -56,7 +58,9 @@ describe('side effects middleware', () => {
     const applyMiddlewareFunction = applySideEffectsMiddleware(dispatch)
     applyMiddlewareFunction(createdAction)
     expect(dispatch).toHaveBeenCalledWith(createdAction)
-    expect(sideEffect).toHaveBeenCalledWith(createdAction, dispatch)
+    // cannot do called with for this situation
+    // eslint-disable-next-line jest/prefer-called-with
+    expect(sideEffect).toHaveBeenCalled()
     expect(sideEffectCalledAfterDispatch).toBe(true)
   })
 })

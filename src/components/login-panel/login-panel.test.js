@@ -3,8 +3,8 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import { createTestStoreProvider } from '../../store/test-store'
 import userEvent from '@testing-library/user-event'
-import { initialState } from '../../core/auth/authentication-reducer'
-import authenticateUserActions from '../../core/auth/authenticate-user-actions'
+import { initialState } from '../../core/authentication/reducer/authentication-reducer'
+import authenticateUserActions from '../../core/authentication/authenticate-user-actions'
 
 describe('login panel', () => {
   const dispatch = jest.fn()

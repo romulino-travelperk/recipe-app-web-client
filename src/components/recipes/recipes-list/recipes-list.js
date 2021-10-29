@@ -15,8 +15,17 @@ const RecipesList = () => {
   const { state } = useContext(StoreContext)
 
   return (
-    <StyledRecipeList isLoading={state.authentication?.status === 'loading'}>
-      ...
+    <StyledRecipeList isLoading={state.recipes.loading}>
+      <ul>
+        {state.recipes.list?.map((recipe, index) => {
+          return (
+            <li key={recipe.title + index}>
+              {/*{JSON.stringify(recipe)}*/}
+              {recipe.title}
+            </li>
+          )
+        })}
+      </ul>
     </StyledRecipeList>
   )
 }

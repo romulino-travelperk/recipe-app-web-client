@@ -1,11 +1,15 @@
 import { createContext, useReducer } from 'react'
 import {
-  initialState,
+  initialState as authenticationInitialState,
   authenticationReducer,
-} from '../core/auth/authentication-reducer'
+} from '../core/authentication/reducer/authentication-reducer'
 import { applySideEffectsMiddleware } from './side-effects-middleware'
-import addSideEffectsToStore from '../core/auth/add-side-effects-to-store'
+import addSideEffectsToStore from './add-side-effects-to-store'
 import combineReducers from './combine-reducers'
+import {
+  recipesReducer,
+  initialState as recipesInitialState,
+} from '../core/recipes/reducer/recipes-reducer'
 
 const StoreContext = createContext({})
 
@@ -13,8 +17,11 @@ addSideEffectsToStore()
 
 const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(
-    combineReducers({ authentication: authenticationReducer }),
-    initialState
+    combineReducers({
+      authentication: authenticationReducer,
+      recipes: recipesReducer,
+    }),
+    { authentication: authenticationInitialState, recipes: recipesInitialState }
   )
   const dispatchWithSideEffects = applySideEffectsMiddleware(dispatch)
   return (

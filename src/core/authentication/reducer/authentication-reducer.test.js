@@ -1,19 +1,10 @@
 import { initialState, authenticationReducer } from './authentication-reducer'
-import { makeActionCreatorFor } from '../../store/make-actions'
-import authenticateUserActions from './authenticate-user-actions'
+import { makeActionCreatorFor } from '../../../store/make-actions'
+import authenticateUserActions from '../authenticate-user-actions'
 
 describe('reducer', () => {
-  it('initial state has auth status as unknown', () => {
+  it('initial state has authentication status as unknown', () => {
     expect(initialState).toEqual({ status: 'unknown' })
-  })
-
-  it('returns current state when given an invalid action', () => {
-    const newState = authenticationReducer(
-      initialState,
-      makeActionCreatorFor('someInvalidAction')
-    )
-
-    expect(newState).toEqual(initialState)
   })
 
   it('sets status to loading on intent to authenticate', () => {
@@ -47,7 +38,7 @@ describe('reducer', () => {
     })
   })
 
-  it('adds user to auth status when login is successful', () => {
+  it('adds user to authentication status when login is successful', () => {
     const newState = authenticationReducer(
       initialState,
       authenticateUserActions.success({
@@ -60,7 +51,7 @@ describe('reducer', () => {
     })
   })
 
-  it('adds error to auth status when login fails', () => {
+  it('adds error to authentication status when login fails', () => {
     const newState = authenticationReducer(
       initialState,
       authenticateUserActions.failure({

@@ -1,10 +1,11 @@
-import authenticateUserActions from './authenticate-user-actions'
+import authenticateUserActions from '../authenticate-user-actions'
+import createReducer from '../../../store/create-reducer'
 
 const initialState = {
   status: 'unknown',
 }
 
-const actionsMap = {
+const actionTypesToReducers = {
   [authenticateUserActions.intention.type]: (state) => ({
     ...state,
     status: 'loading',
@@ -21,8 +22,6 @@ const actionsMap = {
   }),
 }
 
-function authenticationReducer(state, action) {
-  return actionsMap[action.type]?.call(null, state, action.payload) || state
-}
+const authenticationReducer = createReducer(actionTypesToReducers)
 
 export { initialState, authenticationReducer }

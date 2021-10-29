@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { StoreContext } from '../../store/store'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components/macro'
-import authenticateUserActions from '../../core/auth/authenticate-user-actions'
+import authenticateUserActions from '../../core/authentication/authenticate-user-actions'
 
 const StyledLoginPanel = styled.div`
   display: flex;
