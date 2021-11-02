@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { StoreContext } from '../../../store/store'
 import styled from 'styled-components/macro'
+import { recipeActions } from '../../../core/recipes/recipes-reducer'
 
 const StyledRecipeList = styled.div`
   display: flex;
@@ -12,15 +13,19 @@ const StyledRecipeList = styled.div`
 `
 
 const RecipesList = () => {
-  const { state } = useContext(StoreContext)
+  const { state, dispatch } = useContext(StoreContext)
 
   return (
     <StyledRecipeList isLoading={state.recipes.loading}>
+      {!state.recipes.list && <div>You have no recipes yet</div>}
+      <pre>{JSON.stringify(state)}</pre>
       <ul>
         {state.recipes.list?.map((recipe, index) => {
           return (
-            <li key={recipe.title + index}>
-              {/*{JSON.stringify(recipe)}*/}
+            <li
+              key={recipe.title + index}
+              onClick={() => dispatch(recipeActions.showDetails(recipe))}
+            >
               {recipe.title}
             </li>
           )

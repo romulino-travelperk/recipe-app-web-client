@@ -1,12 +1,12 @@
-import appErrors, { appErrorFor } from '../../errors/appErrors'
-import getRecipesActions from '../get-recipes-actions'
-import apiUrls from '../../urls/api-urls'
+import appErrors, { appErrorFor } from '../errors/appErrors'
+import apiUrls from '../urls/api-urls'
 import axios from 'axios'
+import { recipeActions } from './recipes-reducer'
 
-const failure = getRecipesActions.failure
-const success = getRecipesActions.success
+const failure = recipeActions.get.failure
+const success = recipeActions.get.success
 
-async function getRecipesIntentionSideEffect(action, dispatch) {
+async function handleGetRecipesIntention(action, dispatch) {
   if (!action.payload.token) {
     dispatch(
       failure({
@@ -44,4 +44,4 @@ async function getRecipesIntentionSideEffect(action, dispatch) {
   }
 }
 
-export default getRecipesIntentionSideEffect
+export default handleGetRecipesIntention

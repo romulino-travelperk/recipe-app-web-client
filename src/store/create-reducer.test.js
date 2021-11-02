@@ -1,6 +1,6 @@
 import createReducer from './create-reducer'
 import { makeActionCreatorFor } from './make-actions'
-import { initialState } from '../core/recipes/reducer/recipes-reducer'
+import { initialState } from '../core/recipes/recipes-reducer'
 
 describe('create reducer', () => {
   it('creates a reducer based on a map from action types to functions', () => {

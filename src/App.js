@@ -6,6 +6,7 @@ import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import RecipesList from './components/recipes/recipes-list/recipes-list'
 import authenticateUserActions from './core/authentication/authenticate-user-actions'
 import { useContext, useEffect } from 'react'
+import RecipeDetail from './components/recipes/recipe-detail/recipe-detail'
 
 const StyledApp = styled.div`
   margin: 0;
@@ -34,6 +35,9 @@ function ConnectedApp() {
               <li>
                 <Link to="/ingredients">Ingredients</Link>
               </li>
+              <li>
+                <Link to="/tags">Tags</Link>
+              </li>
             </ul>
           </nav>
 
@@ -45,9 +49,13 @@ function ConnectedApp() {
             </Route>
             <Route path="/recipes">
               <RecipesList />
+              <RecipeDetail />
             </Route>
             <Route path="/ingredients">
               <div>Ingredients here...</div>
+            </Route>
+            <Route path="/tags">
+              <div>Tags here...</div>
             </Route>
           </Switch>
         </div>

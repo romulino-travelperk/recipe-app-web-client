@@ -1,22 +1,22 @@
 import { addSideEffectAfterAction } from './side-effects-middleware'
-import authenticateUserIntentionSideEffect from '../core/authentication/side-effects/intention/authenticate-user-intention-side-effect'
+import handleUserAuthentication from '../core/authentication/side-effects/intention/handle-user-authentication-intention'
 import authenticateUserActions from '../core/authentication/authenticate-user-actions'
-import authenticateUserSuccessSideEffect from '../core/authentication/side-effects/success/authenticate-user-success-side-effect'
-import getRecipesActions from '../core/recipes/get-recipes-actions'
-import getRecipesIntentionSideEffect from '../core/recipes/side-effects/get-recipes-intention-side-effect'
+import handleUserAuthenticationSuccess from '../core/authentication/side-effects/success/handle-user-authentication-success'
+import { recipeActions } from '../core/recipes/recipes-reducer'
+import handleGetRecipesIntention from '../core/recipes/handle-get-recipes-intention'
 
 function addSideEffectsToStore() {
   addSideEffectAfterAction(
     authenticateUserActions.intention.type,
-    authenticateUserIntentionSideEffect
+    handleUserAuthentication
   )
   addSideEffectAfterAction(
     authenticateUserActions.success.type,
-    authenticateUserSuccessSideEffect
+    handleUserAuthenticationSuccess
   )
   addSideEffectAfterAction(
-    getRecipesActions.intention.type,
-    getRecipesIntentionSideEffect
+    recipeActions.get.intention.type,
+    handleGetRecipesIntention
   )
 }
 

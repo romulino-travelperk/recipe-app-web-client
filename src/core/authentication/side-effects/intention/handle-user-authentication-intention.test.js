@@ -3,7 +3,7 @@
 // For more information see:
 // https://github.com/facebook/jest/issues/6798 and https://github.com/jsdom/jsdom/issues/2318
 
-import authenticateUserIntentionSideEffect from './authenticate-user-intention-side-effect'
+import handleUserAuthenticationIntention from './handle-user-authentication-intention'
 
 import {
   getAuthDataFromLocalStorage,
@@ -51,7 +51,7 @@ describe('authentication intention side effect', () => {
       email: userEmail,
       token: authToken,
     })
-    authenticateUserIntentionSideEffect(
+    handleUserAuthenticationIntention(
       authenticateUserActions.intention(),
       dispatch
     )
@@ -80,7 +80,7 @@ describe('authentication intention side effect', () => {
       name: userName,
     })
 
-    await authenticateUserIntentionSideEffect(
+    await handleUserAuthenticationIntention(
       authenticateUserActions.intention(loginCredentials),
       dispatch
     )
@@ -127,7 +127,7 @@ describe('authentication intention side effect', () => {
       name: userName,
     })
 
-    await authenticateUserIntentionSideEffect(
+    await handleUserAuthenticationIntention(
       authenticateUserActions.intention(loginCredentials),
       dispatch
     )
@@ -156,7 +156,7 @@ describe('authentication intention side effect', () => {
   })
 
   it('fails when there is no token in localstorage and no credentials in action payload', async () => {
-    await authenticateUserIntentionSideEffect(
+    await handleUserAuthenticationIntention(
       authenticateUserActions.intention(),
       dispatch
     )
@@ -182,7 +182,7 @@ describe('authentication intention side effect', () => {
       })
       .reply(400, badRequestResponseData)
 
-    await authenticateUserIntentionSideEffect(
+    await handleUserAuthenticationIntention(
       authenticateUserActions.intention(badLoginCredentials),
       dispatch
     )
@@ -203,7 +203,7 @@ describe('authentication intention side effect', () => {
       })
       .networkError()
 
-    await authenticateUserIntentionSideEffect(
+    await handleUserAuthenticationIntention(
       authenticateUserActions.intention(loginCredentials),
       dispatch
     )
@@ -224,7 +224,7 @@ describe('authentication intention side effect', () => {
       })
       .timeout()
 
-    await authenticateUserIntentionSideEffect(
+    await handleUserAuthenticationIntention(
       authenticateUserActions.intention(loginCredentials),
       dispatch
     )

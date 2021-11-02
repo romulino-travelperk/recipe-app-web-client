@@ -11,7 +11,7 @@ import authenticateUserActions from '../../authenticate-user-actions'
 const success = authenticateUserActions.success
 const failure = authenticateUserActions.failure
 
-async function authenticateUserIntentionSideEffect(action, dispatch) {
+async function handleUserAuthenticationIntention(action, dispatch) {
   const localAuthData = getAuthDataFromLocalStorage()
   const hasCredentialsPayload = action.payload.email && action.payload.password
   if (localAuthData.token && !hasCredentialsPayload) {
@@ -71,4 +71,4 @@ async function authenticateUserIntentionSideEffect(action, dispatch) {
   }
 }
 
-export default authenticateUserIntentionSideEffect
+export default handleUserAuthenticationIntention

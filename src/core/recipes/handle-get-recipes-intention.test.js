@@ -1,7 +1,7 @@
-import getRecipesIntentionSideEffect from './get-recipes-intention-side-effect'
-import getRecipesActions from '../get-recipes-actions'
-import appErrors from '../../errors/appErrors'
-import apiUrls from '../../urls/api-urls'
+import handleGetRecipesIntention from './handle-get-recipes-intention'
+import { recipeActions } from './recipes-reducer'
+import appErrors from '../errors/appErrors'
+import apiUrls from '../urls/api-urls'
 
 const axios = require('axios')
 const MockAdapter = require('axios-mock-adapter')
@@ -39,10 +39,10 @@ describe('get recipes intention side effect', () => {
   })
 
   it('fails if no authentication token is provided', () => {
-    getRecipesIntentionSideEffect(getRecipesActions.intention(), dispatch)
+    handleGetRecipesIntention(recipeActions.get.intention(), dispatch)
 
     expect(dispatch).toHaveBeenCalledWith(
-      getRecipesActions.failure({
+      recipeActions.get.failure({
         origin: 'client',
         error: appErrors.NO_AUTH_TOKEN_PROVIDED,
       })
@@ -52,8 +52,8 @@ describe('get recipes intention side effect', () => {
   it('gets recipes from the network when an authentication token is provided', async () => {
     axiosMock.onGet(apiUrls.recipes).reply(200, recipes)
 
-    await getRecipesIntentionSideEffect(
-      getRecipesActions.intention({ token: authToken }),
+    await handleGetRecipesIntention(
+      recipeActions.get.intention({ token: authToken }),
       dispatch
     )
 
@@ -61,14 +61,14 @@ describe('get recipes intention side effect', () => {
       `token ${authToken}`
     )
 
-    expect(dispatch).toHaveBeenCalledWith(getRecipesActions.success(recipes))
+    expect(dispatch).toHaveBeenCalledWith(recipeActions.get.success(recipes))
   })
 
   it('fails on network error', async () => {
     axiosMock.onGet(apiUrls.recipes).networkError()
 
-    await getRecipesIntentionSideEffect(
-      getRecipesActions.intention({ token: authToken }),
+    await handleGetRecipesIntention(
+      recipeActions.get.intention({ token: authToken }),
       dispatch
     )
 
@@ -77,7 +77,7 @@ describe('get recipes intention side effect', () => {
     )
 
     expect(dispatch).toHaveBeenCalledWith(
-      getRecipesActions.failure({
+      recipeActions.get.failure({
         error: appErrors.NETWORK_ERROR,
         origin: 'client',
       })
@@ -87,8 +87,8 @@ describe('get recipes intention side effect', () => {
   it('fails on connection timeout', async () => {
     axiosMock.onGet(apiUrls.recipes).timeout()
 
-    await getRecipesIntentionSideEffect(
-      getRecipesActions.intention({ token: authToken }),
+    await handleGetRecipesIntention(
+      recipeActions.get.intention({ token: authToken }),
       dispatch
     )
 
@@ -97,7 +97,7 @@ describe('get recipes intention side effect', () => {
     )
 
     expect(dispatch).toHaveBeenCalledWith(
-      getRecipesActions.failure({
+      recipeActions.get.failure({
         error: appErrors.CONNECTION_TIMED_OUT,
         origin: 'client',
       })

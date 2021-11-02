@@ -9,7 +9,7 @@ import combineReducers from './combine-reducers'
 import {
   recipesReducer,
   initialState as recipesInitialState,
-} from '../core/recipes/reducer/recipes-reducer'
+} from '../core/recipes/recipes-reducer'
 
 const StoreContext = createContext({})
 

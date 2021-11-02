@@ -1,6 +1,6 @@
 import authenticateUserActions from '../../authenticate-user-actions'
-import getRecipesActions from '../../../recipes/get-recipes-actions'
-import authenticateUserSuccessSideEffect from './authenticate-user-success-side-effect'
+import { recipeActions } from '../../../recipes/recipes-reducer'
+import handleUserAuthenticationSuccess from './handle-user-authentication-success'
 
 describe('authentication success side effect', () => {
   const userEmail = 'me@email.com'
@@ -17,13 +17,13 @@ describe('authentication success side effect', () => {
         token: authToken,
       },
     }
-    authenticateUserSuccessSideEffect(
+    handleUserAuthenticationSuccess(
       authenticateUserActions.success(successPayload),
       dispatch
     )
 
     expect(dispatch).toHaveBeenCalledWith(
-      getRecipesActions.intention({ token: authToken })
+      recipeActions.get.intention({ token: authToken })
     )
   })
 })
