@@ -1,7 +1,14 @@
-import handleGetRecipesIntention from './handle-get-recipes-intention'
-import { recipeActions } from './recipes-reducer'
+import getHandlerForNetworkGetIntention from './make-handler-for-network-get-intention'
 import appErrors from '../errors/appErrors'
 import apiUrls from '../urls/api-urls'
+
+import { recipeActions } from '../recipes/recipes-reducer'
+
+const handleGetRecipesIntention = getHandlerForNetworkGetIntention(
+  apiUrls.recipes,
+  recipeActions.get.success,
+  recipeActions.get.failure
+)
 
 const axios = require('axios')
 const MockAdapter = require('axios-mock-adapter')
