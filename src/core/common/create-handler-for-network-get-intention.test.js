@@ -1,10 +1,10 @@
-import getHandlerForNetworkGetIntention from './make-handler-for-network-get-intention'
+import createHandlerForNetworkGetIntention from './create-handler-for-network-get-intention'
 import appErrors from '../errors/appErrors'
 import apiUrls from '../urls/api-urls'
 
-import { recipeActions } from '../recipes/recipes-reducer'
+import { recipeActions } from '../recipes/recipes'
 
-const handleGetRecipesIntention = getHandlerForNetworkGetIntention(
+const handleGetRecipesIntention = createHandlerForNetworkGetIntention(
   apiUrls.recipes,
   recipeActions.get.success,
   recipeActions.get.failure
@@ -14,7 +14,7 @@ const axios = require('axios')
 const MockAdapter = require('axios-mock-adapter')
 const axiosMock = new MockAdapter(axios)
 
-describe('get recipes intention side effect', () => {
+describe('network get intention handler', () => {
   const dispatch = jest.fn()
 
   const authToken = '134123532423554'
@@ -56,7 +56,7 @@ describe('get recipes intention side effect', () => {
     )
   })
 
-  it('gets recipes from the network when an authentication token is provided', async () => {
+  it('gets data from the network when an authentication token is provided', async () => {
     axiosMock.onGet(apiUrls.recipes).reply(200, recipes)
 
     await handleGetRecipesIntention(

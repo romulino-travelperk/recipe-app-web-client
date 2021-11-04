@@ -1,14 +1,14 @@
 let sideEffectsMap = {}
 
-function applySideEffectsMiddleware(dispatch) {
+function applySideEffectsMiddleware(state, dispatch) {
   return function (action) {
+    // console.log('dispatched', action)
     sideEffectsMap[action.type]?.before?.forEach((sideEffect) => {
-      sideEffect(action, applySideEffectsMiddleware(dispatch))
+      sideEffect(action, applySideEffectsMiddleware(state, dispatch), state)
     })
-
     dispatch(action)
     sideEffectsMap[action.type]?.after?.forEach((sideEffect) => {
-      sideEffect(action, applySideEffectsMiddleware(dispatch))
+      sideEffect(action, applySideEffectsMiddleware(state, dispatch), state)
     })
   }
 }

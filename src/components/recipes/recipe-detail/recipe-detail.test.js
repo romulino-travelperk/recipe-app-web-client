@@ -1,22 +1,11 @@
 import RecipeDetail from './recipe-detail'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { createTestStoreProvider } from '../../../store/test-store'
-import { initialState } from '../../../core/recipes/recipes-reducer'
+import { initialState } from '../../../core/recipes/recipes'
 
 describe('recipes list', () => {
   const dispatch = jest.fn()
   let TestStoreProvider
-
-  const aRecipe = {
-    id: 2,
-    title: 'a good Recipe',
-    tags: [1, 2],
-    ingredients: [1, 2],
-    time_in_minutes: 2,
-    price: '2.00',
-    link: 'http://www.google.com',
-    image: null,
-  }
 
   afterEach(() => {
     cleanup()
@@ -39,8 +28,60 @@ describe('recipes list', () => {
   })
 
   it('renders populated', () => {
+    const aRecipe = {
+      id: 1,
+      title: 'a good recipe',
+      tags: [1, 2],
+      ingredients: [1, 2],
+      time_in_minutes: 1,
+      price: '1.00',
+      link: 'http://somelink.com',
+      image: null,
+    }
     TestStoreProvider = createTestStoreProvider(
-      { recipes: { showDetailsFor: aRecipe } },
+      {
+        authentication: {
+          status: 'authenticated',
+          user: {
+            name: '',
+            token: '4c0c27621593e1968c6437fbdebaaadff6e94fd7',
+            email: 'me@email.com',
+          },
+        },
+        recipes: {
+          loading: false,
+          list: [
+            {
+              id: 2,
+              title: '22222',
+              tags: [],
+              ingredients: [],
+              time_in_minutes: 2,
+              price: '2.00',
+              link: '',
+              image: null,
+            },
+            aRecipe,
+          ],
+          showDetailsFor: aRecipe,
+        },
+        ingredients: {
+          loading: true,
+          list: [
+            { id: 2, name: 'ingredient 2' },
+            { id: 1, name: 'ingredient 1' },
+          ],
+          idToName: { 1: 'ingredient 1', 2: 'ingredient 2' },
+        },
+        tags: {
+          loading: true,
+          list: [
+            { id: 2, name: 'tag2' },
+            { id: 1, name: 'tag1' },
+          ],
+          idToName: { 1: 'tag1', 2: 'tag2' },
+        },
+      },
       dispatch
     )
 

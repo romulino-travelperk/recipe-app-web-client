@@ -1,7 +1,7 @@
 import appErrors, { appErrorFor } from '../errors/appErrors'
 import axios from 'axios'
 
-function getHandlerForNetworkGetIntention(
+function createHandlerForNetworkGetIntention(
   url,
   successActionCreator,
   failureActionCreator
@@ -48,4 +48,4 @@ function getHandlerForNetworkGetIntention(
   }
 }
 
-export default getHandlerForNetworkGetIntention
+export default createHandlerForNetworkGetIntention

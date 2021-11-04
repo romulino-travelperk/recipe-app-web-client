@@ -1,4 +1,4 @@
-import { makeActionCreatorFor } from './make-actions'
+import { createActionCreatorFor } from './create-actions'
 import { StoreContext } from './store'
 
 const createTestStoreProvider = (state, dispatch) => {

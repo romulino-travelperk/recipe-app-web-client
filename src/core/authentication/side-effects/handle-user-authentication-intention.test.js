@@ -8,11 +8,11 @@ import handleUserAuthenticationIntention from './handle-user-authentication-inte
 import {
   getAuthDataFromLocalStorage,
   setAuthDataInLocalStorage,
-} from '../../local-storage/local-storage-auth'
+} from '../local-storage/local-storage-auth'
 
-import apiUrls from '../../../urls/api-urls'
-import appErrors from '../../../errors/appErrors'
-import authenticateUserActions from '../../authenticate-user-actions'
+import apiUrls from '../../urls/api-urls'
+import appErrors from '../../errors/appErrors'
+import authenticateUserActions from '../authenticate-user-actions'
 
 const axios = require('axios')
 const MockAdapter = require('axios-mock-adapter')

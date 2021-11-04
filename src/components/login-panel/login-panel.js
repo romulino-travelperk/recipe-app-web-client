@@ -3,6 +3,7 @@ import { StoreContext } from '../../store/store'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components/macro'
 import authenticateUserActions from '../../core/authentication/authenticate-user-actions'
+import { ErrorMessage, InputField, SubmitButton } from '../common/styled-form'
 
 const StyledLoginPanel = styled.div`
   display: flex;
@@ -11,39 +12,6 @@ const StyledLoginPanel = styled.div`
   background-color: ${(props) => (props.isLoading ? '#141617' : '#282c34')};
   border-radius: 8px;
   padding: 16px;
-`
-
-const InputField = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  color: white;
-  border-radius: 8px;
-  line-height: 1.5em;
-  padding: 16px;
-  min-height: 5em;
-
-  input {
-    border-radius: 8px;
-    line-height: 2em;
-    text-align: center;
-    font-weight: bold;
-  }
-`
-
-const ErrorMessage = styled.div`
-  display: inline-block;
-  color: yellow;
-  font-weight: bold;
-`
-
-const LoginButton = styled.input`
-  background-color: white;
-  border-radius: 8px;
-  border: none;
-  line-height: 2em;
-  padding: 0 16px;
-  min-width: 100px;
 `
 
 const LoginPanel = () => {
@@ -59,7 +27,6 @@ const LoginPanel = () => {
 
   return (
     <StyledLoginPanel isLoading={state.authentication?.status === 'loading'}>
-      <pre>{JSON.stringify(state)}</pre>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField>
           <label htmlFor="email">Email</label>
@@ -89,7 +56,7 @@ const LoginPanel = () => {
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
         </InputField>
         <InputField>
-          <LoginButton
+          <SubmitButton
             type="submit"
             value="Log in"
             disabled={state.authentication?.status === 'loading'}

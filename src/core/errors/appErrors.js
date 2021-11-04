@@ -1,4 +1,12 @@
 const appErrors = {
+  MISSING_ID: {
+    code: 'MISSING_ID',
+    description: 'No id was provided for a delete operation',
+  },
+  NO_DATA: {
+    code: 'NO_DATA',
+    description: 'No data was provided for the request',
+  },
   NO_AUTH_PROVIDED: {
     code: 'NO_AUTH_PROVIDED',
     description: 'You need to provide username and password',

@@ -1,5 +1,5 @@
-import { makeActionCreatorsFor } from '../../store/make-actions'
+import { createActionCreatorsFor } from '../../store/create-actions'
 
-const authenticateUserActions = makeActionCreatorsFor('authenticateUser')
+const authenticateUserActions = createActionCreatorsFor('authenticateUser')
 
 export default authenticateUserActions

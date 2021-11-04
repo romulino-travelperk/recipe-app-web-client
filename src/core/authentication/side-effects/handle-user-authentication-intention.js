@@ -1,12 +1,12 @@
 import {
   getAuthDataFromLocalStorage,
   setAuthDataInLocalStorage,
-} from '../../local-storage/local-storage-auth'
+} from '../local-storage/local-storage-auth'
 
 import axios from 'axios'
-import apiUrls from '../../../urls/api-urls'
-import appErrors, { appErrorFor } from '../../../errors/appErrors'
-import authenticateUserActions from '../../authenticate-user-actions'
+import apiUrls from '../../urls/api-urls'
+import appErrors, { appErrorFor } from '../../errors/appErrors'
+import authenticateUserActions from '../authenticate-user-actions'
 
 const success = authenticateUserActions.success
 const failure = authenticateUserActions.failure

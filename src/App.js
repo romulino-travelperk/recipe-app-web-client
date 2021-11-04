@@ -6,13 +6,25 @@ import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import RecipesList from './components/recipes/recipes-list/recipes-list'
 import authenticateUserActions from './core/authentication/authenticate-user-actions'
 import { useContext, useEffect } from 'react'
-import RecipeDetail from './components/recipes/recipe-detail/recipe-detail'
+import TagList from './components/tags/tag-list/tag-list'
+import TagEditor from './components/tags/tag-editor/tag-editor'
+import IngredientList from './components/ingredients/ingredient-list/ingredient-list'
+import IngredientEditor from './components/ingredients/ingredient-editor/ingredient-editor'
+import RecipeEditor from './components/recipes/recipe-editor/recipe-editor'
+import ListWithEditor from './components/common/list-with-editor'
+import RequiresAuthentication from './components/common/requires-authentication'
+import Navigator from './components/navigator/navigator'
 
 const StyledApp = styled.div`
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  background-color: #3b4371;
 `
 
 function ConnectedApp() {
@@ -24,23 +36,7 @@ function ConnectedApp() {
     <StyledApp>
       <Router>
         <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/recipes">Recipes</Link>
-              </li>
-              <li>
-                <Link to="/ingredients">Ingredients</Link>
-              </li>
-              <li>
-                <Link to="/tags">Tags</Link>
-              </li>
-            </ul>
-          </nav>
-
+          <Navigator />
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
@@ -48,14 +44,28 @@ function ConnectedApp() {
               <LoginPanel>...</LoginPanel>
             </Route>
             <Route path="/recipes">
-              <RecipesList />
-              <RecipeDetail />
+              <RequiresAuthentication>
+                <ListWithEditor
+                  editorComponent={RecipeEditor}
+                  listComponent={RecipesList}
+                />
+              </RequiresAuthentication>
             </Route>
             <Route path="/ingredients">
-              <div>Ingredients here...</div>
+              <RequiresAuthentication>
+                <ListWithEditor
+                  editorComponent={IngredientEditor}
+                  listComponent={IngredientList}
+                />
+              </RequiresAuthentication>
             </Route>
             <Route path="/tags">
-              <div>Tags here...</div>
+              <RequiresAuthentication>
+                <ListWithEditor
+                  editorComponent={TagEditor}
+                  listComponent={TagList}
+                />
+              </RequiresAuthentication>
             </Route>
           </Switch>
         </div>

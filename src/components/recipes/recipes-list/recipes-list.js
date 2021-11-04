@@ -1,37 +1,36 @@
 import { useContext } from 'react'
 import { StoreContext } from '../../../store/store'
-import styled from 'styled-components/macro'
-import { recipeActions } from '../../../core/recipes/recipes-reducer'
-
-const StyledRecipeList = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: white;
-  background-color: ${(props) => (props.isLoading ? '#141617' : '#282c34')};
-  border-radius: 8px;
-  padding: 16px;
-`
+import { recipeActions } from '../../../core/recipes/recipes'
+import { ListItem, UnorderedList } from '../../common/styled-list'
+import RecipeDetail from '../recipe-detail/recipe-detail'
 
 const RecipesList = () => {
   const { state, dispatch } = useContext(StoreContext)
 
   return (
-    <StyledRecipeList isLoading={state.recipes.loading}>
+    <div>
       {!state.recipes.list && <div>You have no recipes yet</div>}
-      <pre>{JSON.stringify(state)}</pre>
-      <ul>
+      <UnorderedList>
         {state.recipes.list?.map((recipe, index) => {
           return (
-            <li
-              key={recipe.title + index}
-              onClick={() => dispatch(recipeActions.showDetails(recipe))}
-            >
-              {recipe.title}
-            </li>
+            <div key={recipe.title + index}>
+              <RecipeDetail />
+              <ListItem>
+                {recipe.title}
+                <button
+                  onClick={() => dispatch(recipeActions.showDetails(recipe))}
+                >
+                  Show
+                </button>
+                <button onClick={() => dispatch(recipeActions.edit(recipe))}>
+                  Edit
+                </button>
+              </ListItem>
+            </div>
           )
         })}
-      </ul>
-    </StyledRecipeList>
+      </UnorderedList>
+    </div>
   )
 }
 

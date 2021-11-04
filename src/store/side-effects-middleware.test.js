@@ -1,4 +1,4 @@
-import { makeActionCreatorFor } from './make-actions'
+import { createActionCreatorFor } from './create-actions'
 import {
   addSideEffectAfterAction,
   addSideEffectBeforeAction,
@@ -8,9 +8,10 @@ import {
 
 describe('side effects middleware', () => {
   const dispatch = jest.fn()
-  const anAction = makeActionCreatorFor('AnAction')
+  const anAction = createActionCreatorFor('AnAction')
   const actionPayload = { someData: 'some payload data' }
-  const applyMiddlewareFunction = applySideEffectsMiddleware(dispatch)
+  const state = { someState: 'someThing' }
+  const applyMiddlewareFunction = applySideEffectsMiddleware(state, dispatch)
   const createdAction = anAction(actionPayload)
 
   beforeEach(() => {
@@ -34,7 +35,7 @@ describe('side effects middleware', () => {
     })
 
     addSideEffectBeforeAction(anAction.type, sideEffect)
-    const applyMiddlewareFunction = applySideEffectsMiddleware(dispatch)
+    const applyMiddlewareFunction = applySideEffectsMiddleware(state, dispatch)
     applyMiddlewareFunction(createdAction)
     expect(dispatch).toHaveBeenCalledWith(createdAction)
     // cannot do called with for this situation
@@ -55,7 +56,7 @@ describe('side effects middleware', () => {
     })
 
     addSideEffectAfterAction(anAction.type, sideEffect)
-    const applyMiddlewareFunction = applySideEffectsMiddleware(dispatch)
+    const applyMiddlewareFunction = applySideEffectsMiddleware(state, dispatch)
     applyMiddlewareFunction(createdAction)
     expect(dispatch).toHaveBeenCalledWith(createdAction)
     // cannot do called with for this situation

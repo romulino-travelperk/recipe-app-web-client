@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import {
   recipeActions,
   recipesInitialState as initialState,
-} from '../../../core/recipes/recipes-reducer'
+} from '../../../core/recipes/recipes'
 
 describe('recipes list', () => {
   const dispatch = jest.fn()
@@ -98,8 +98,8 @@ describe('recipes list', () => {
       </TestStoreProvider>
     )
 
-    const aRecipeTitle = screen.getByText(recipe2.title)
-    userEvent.click(aRecipeTitle)
+    const showRecipeButton = screen.getAllByText('Show')[1]
+    userEvent.click(showRecipeButton)
     expect(dispatch).toHaveBeenLastCalledWith(
       recipeActions.showDetails(recipe2)
     )

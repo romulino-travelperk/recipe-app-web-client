@@ -1,5 +1,5 @@
 import { initialState, authenticationReducer } from './authentication-reducer'
-import { makeActionCreatorFor } from '../../../store/make-actions'
+import { createActionCreatorFor } from '../../../store/create-actions'
 import authenticateUserActions from '../authenticate-user-actions'
 
 describe('reducer', () => {
