@@ -1,7 +1,7 @@
-import appErrors, { appErrorFor } from '../errors/appErrors'
+import appErrors, { appErrorFor } from '../../errors/appErrors'
 import axios from 'axios'
 
-function createHandlerForNetworkDeleteIntention(
+function createHandlerForNetworkSaveIntention(
   url,
   successActionCreator,
   failureActionCreator
@@ -19,21 +19,22 @@ function createHandlerForNetworkDeleteIntention(
       )
       return
     }
-    if (!action.payload.id) {
+    if (!action.payload.data) {
       dispatch(
         failure({
           origin: 'client',
-          error: appErrors.MISSING_ID,
+          error: appErrors.NO_DATA,
         })
       )
       return
     }
 
     const token = action.payload.token
-    const id = action.payload.id
-    const completeUrl = url + id + '/'
+    const data = action.payload.data
+    const completeUrl = data.id ? url + data.id + '/' : url
+    const requestMethod = data.id ? axios.put : axios.post
     try {
-      const response = await axios.delete(completeUrl, {
+      const response = await requestMethod(completeUrl, data, {
         headers: { Authorization: `token ${token}` },
       })
       dispatch(success(response.data))
@@ -60,4 +61,4 @@ function createHandlerForNetworkDeleteIntention(
   }
 }
 
-export default createHandlerForNetworkDeleteIntention
+export default createHandlerForNetworkSaveIntention

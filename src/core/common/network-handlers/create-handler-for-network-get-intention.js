@@ -1,7 +1,7 @@
-import appErrors, { appErrorFor } from '../errors/appErrors'
+import appErrors, { appErrorFor } from '../../errors/appErrors'
 import axios from 'axios'
 
-function createHandlerForNetworkSaveIntention(
+function createHandlerForNetworkGetIntention(
   url,
   successActionCreator,
   failureActionCreator
@@ -9,7 +9,7 @@ function createHandlerForNetworkSaveIntention(
   const failure = failureActionCreator
   const success = successActionCreator
 
-  return async function handleNetworkSaveIntention(action, dispatch) {
+  return async function handleNetworkGetIntention(action, dispatch) {
     if (!action.payload.token) {
       dispatch(
         failure({
@@ -19,22 +19,9 @@ function createHandlerForNetworkSaveIntention(
       )
       return
     }
-    if (!action.payload.data) {
-      dispatch(
-        failure({
-          origin: 'client',
-          error: appErrors.NO_DATA,
-        })
-      )
-      return
-    }
-
     const token = action.payload.token
-    const data = action.payload.data
-    const completeUrl = data.id ? url + data.id + '/' : url
-    const requestMethod = data.id ? axios.put : axios.post
     try {
-      const response = await requestMethod(completeUrl, data, {
+      const response = await axios.get(url, {
         headers: { Authorization: `token ${token}` },
       })
       dispatch(success(response.data))
@@ -61,4 +48,4 @@ function createHandlerForNetworkSaveIntention(
   }
 }
 
-export default createHandlerForNetworkSaveIntention
+export default createHandlerForNetworkGetIntention

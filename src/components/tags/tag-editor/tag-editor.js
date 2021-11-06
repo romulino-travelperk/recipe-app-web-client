@@ -2,11 +2,7 @@ import { useContext, useEffect } from 'react'
 import { StoreContext } from '../../../store/store'
 import { useForm } from 'react-hook-form'
 import { tagActions } from '../../../core/tags/tags'
-import {
-  ErrorMessage,
-  InputField,
-  SubmitButton,
-} from '../../common/styled-form'
+import { ErrorMessage, InputField, Button } from '../../common/styled-form'
 
 const TagEditor = () => {
   const { state, dispatch } = useContext(StoreContext)
@@ -25,8 +21,13 @@ const TagEditor = () => {
     )
   }
   useEffect(() => {
-    reset(state.tags.isEditing)
+    reset(state.tags.isEditing || {})
   }, [state.tags.isEditing])
+
+  function isDisabled() {
+    return state.tags?.loading === true || !state.tags.isEditing
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -34,7 +35,7 @@ const TagEditor = () => {
           <label htmlFor="name">Name</label>
           <input
             id="name"
-            disabled={state.tags?.loading === true}
+            disabled={isDisabled()}
             defaultValue={state.tags.isEditing?.name}
             {...register('name', {
               required: { value: true, message: 'is required' },
@@ -43,17 +44,11 @@ const TagEditor = () => {
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </InputField>
         <InputField>
-          <SubmitButton
-            type="submit"
-            value="Save"
-            disabled={state.tags?.loading === true}
-          />
-          <SubmitButton
+          <Button type="submit" value="Save" disabled={isDisabled()} />
+          <Button
             type="button"
             value="Cancel"
-            disabled={
-              state.tags?.loading === true || !state.tags.isEditing?.name
-            }
+            disabled={isDisabled()}
             onClick={() => dispatch(tagActions.editCancel())}
           />
           <ErrorMessage>

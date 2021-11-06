@@ -1,8 +1,8 @@
 import createHandlerForNetworkSaveIntention from './create-handler-for-network-save-intention'
-import appErrors from '../errors/appErrors'
-import apiUrls from '../urls/api-urls'
+import appErrors from '../../errors/appErrors'
+import apiUrls from '../../urls/api-urls'
 
-import { recipeActions } from '../recipes/recipes'
+import { recipeActions } from '../../recipes/recipes'
 
 const handleSaveRecipesIntention = createHandlerForNetworkSaveIntention(
   apiUrls.recipes,

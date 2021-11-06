@@ -1,7 +1,7 @@
-import appErrors, { appErrorFor } from '../errors/appErrors'
+import appErrors, { appErrorFor } from '../../errors/appErrors'
 import axios from 'axios'
 
-function createHandlerForNetworkGetIntention(
+function createHandlerForNetworkDeleteIntention(
   url,
   successActionCreator,
   failureActionCreator
@@ -9,7 +9,7 @@ function createHandlerForNetworkGetIntention(
   const failure = failureActionCreator
   const success = successActionCreator
 
-  return async function handleNetworkGetIntention(action, dispatch) {
+  return async function handleNetworkSaveIntention(action, dispatch) {
     if (!action.payload.token) {
       dispatch(
         failure({
@@ -19,9 +19,21 @@ function createHandlerForNetworkGetIntention(
       )
       return
     }
+    if (!action.payload.id) {
+      dispatch(
+        failure({
+          origin: 'client',
+          error: appErrors.MISSING_ID,
+        })
+      )
+      return
+    }
+
     const token = action.payload.token
+    const id = action.payload.id
+    const completeUrl = url + id + '/'
     try {
-      const response = await axios.get(url, {
+      const response = await axios.delete(completeUrl, {
         headers: { Authorization: `token ${token}` },
       })
       dispatch(success(response.data))
@@ -48,4 +60,4 @@ function createHandlerForNetworkGetIntention(
   }
 }
 
-export default createHandlerForNetworkGetIntention
+export default createHandlerForNetworkDeleteIntention

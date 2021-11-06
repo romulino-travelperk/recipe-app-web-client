@@ -3,6 +3,7 @@ let sideEffectsMap = {}
 function applySideEffectsMiddleware(state, dispatch) {
   return function (action) {
     // console.log('dispatched', action)
+    // console.log(state)
     sideEffectsMap[action.type]?.before?.forEach((sideEffect) => {
       sideEffect(action, applySideEffectsMiddleware(state, dispatch), state)
     })

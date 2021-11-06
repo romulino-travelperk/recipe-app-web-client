@@ -1,12 +1,12 @@
-import LoginPanel from './login-panel'
+import AuthenticationPanel from './authentication-panel'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import { createTestStoreProvider } from '../../store/test-store'
 import userEvent from '@testing-library/user-event'
-import { initialState } from '../../core/authentication/reducer/authentication-reducer'
+import { authenticationInitialState } from '../../core/authentication/reducer/authentication-reducer'
 import authenticateUserActions from '../../core/authentication/authenticate-user-actions'
 
-describe('login panel', () => {
+describe('authentication panel', () => {
   const dispatch = jest.fn()
   let TestStoreProvider
 
@@ -14,7 +14,10 @@ describe('login panel', () => {
   const userPassword = '123'
 
   beforeEach(() => {
-    TestStoreProvider = createTestStoreProvider(initialState, dispatch)
+    TestStoreProvider = createTestStoreProvider(
+      { authentication: authenticationInitialState },
+      dispatch
+    )
   })
 
   afterEach(() => {
@@ -25,7 +28,7 @@ describe('login panel', () => {
   it('renders', () => {
     render(
       <TestStoreProvider>
-        <LoginPanel />
+        <AuthenticationPanel />
       </TestStoreProvider>
     )
 
@@ -37,7 +40,7 @@ describe('login panel', () => {
   it('dispatches authentication intention when provided with username and password and submit clicked', async () => {
     render(
       <TestStoreProvider>
-        <LoginPanel />
+        <AuthenticationPanel />
       </TestStoreProvider>
     )
     const loginButton = screen.getByText('Log in')
@@ -61,7 +64,7 @@ describe('login panel', () => {
   it('does NOT dispatch authentication intention when username is missing', async () => {
     render(
       <TestStoreProvider>
-        <LoginPanel />
+        <AuthenticationPanel />
       </TestStoreProvider>
     )
     const loginButton = screen.getByText('Log in')
@@ -80,7 +83,7 @@ describe('login panel', () => {
   it('does NOT dispatch authentication intention when password is missing', async () => {
     render(
       <TestStoreProvider>
-        <LoginPanel />
+        <AuthenticationPanel />
       </TestStoreProvider>
     )
     const loginButton = screen.getByText('Log in')
@@ -99,7 +102,7 @@ describe('login panel', () => {
   it('does NOT dispatch authentication intention when invalid email', async () => {
     render(
       <TestStoreProvider>
-        <LoginPanel />
+        <AuthenticationPanel />
       </TestStoreProvider>
     )
     const loginButton = screen.getByText('Log in')

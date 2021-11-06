@@ -85,23 +85,4 @@ describe('recipes list', () => {
     expect(screen.getByText(recipe2.title)).not.toBeNull()
     expect(screen.getByText(recipe3.title)).not.toBeNull()
   })
-
-  it('dispatches show details when list item is clicked', () => {
-    TestStoreProvider = createTestStoreProvider(
-      { recipes: { loading: false, list: recipeList } },
-      dispatch
-    )
-
-    render(
-      <TestStoreProvider>
-        <RecipesList />
-      </TestStoreProvider>
-    )
-
-    const showRecipeButton = screen.getAllByText('Show')[1]
-    userEvent.click(showRecipeButton)
-    expect(dispatch).toHaveBeenLastCalledWith(
-      recipeActions.showDetails(recipe2)
-    )
-  })
 })

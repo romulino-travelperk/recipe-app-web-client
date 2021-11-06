@@ -1,6 +1,6 @@
 import './App.css'
 import { StoreContext, StoreProvider } from './store/store'
-import LoginPanel from './components/login-panel/login-panel'
+import AuthenticationPanel from './components/login-panel/authentication-panel'
 import styled from 'styled-components/macro'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import RecipesList from './components/recipes/recipes-list/recipes-list'
@@ -41,7 +41,7 @@ function ConnectedApp() {
             renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/login">
-              <LoginPanel>...</LoginPanel>
+              <AuthenticationPanel>...</AuthenticationPanel>
             </Route>
             <Route path="/recipes">
               <RequiresAuthentication>

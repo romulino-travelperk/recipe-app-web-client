@@ -1,8 +1,8 @@
 import createHandlerForNetworkGetIntention from './create-handler-for-network-get-intention'
-import appErrors from '../errors/appErrors'
-import apiUrls from '../urls/api-urls'
+import appErrors from '../../errors/appErrors'
+import apiUrls from '../../urls/api-urls'
 
-import { recipeActions } from '../recipes/recipes'
+import { recipeActions } from '../../recipes/recipes'
 
 const handleGetRecipesIntention = createHandlerForNetworkGetIntention(
   apiUrls.recipes,

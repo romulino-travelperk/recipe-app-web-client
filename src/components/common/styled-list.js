@@ -4,7 +4,7 @@ const ListItem = styled.li`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 2px;
+  margin: 4px;
   border-radius: 4px;
   background-color: #222222;
   padding: 6px;
@@ -23,7 +23,8 @@ const ListItem = styled.li`
 
 const UnorderedList = styled.ul`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   padding: 0;
 `
 

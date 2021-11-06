@@ -1,7 +1,7 @@
 import authenticateUserActions from '../authenticate-user-actions'
 import createReducer from '../../../store/create-reducer'
 
-const initialState = {
+const authenticationInitialState = {
   status: 'unknown',
 }
 
@@ -20,8 +20,13 @@ const actionTypesToReducers = {
     status: 'notAuthenticated',
     error: payload,
   }),
+  [authenticateUserActions.logout.type]: (state, payload) => ({
+    ...state,
+    status: 'notAuthenticated',
+    error: null,
+  }),
 }
 
 const authenticationReducer = createReducer(actionTypesToReducers)
 
-export { initialState, authenticationReducer }
+export { authenticationInitialState, authenticationReducer }

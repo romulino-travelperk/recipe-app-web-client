@@ -1,15 +1,18 @@
-import { initialState, authenticationReducer } from './authentication-reducer'
+import {
+  authenticationInitialState,
+  authenticationReducer,
+} from './authentication-reducer'
 import { createActionCreatorFor } from '../../../store/create-actions'
 import authenticateUserActions from '../authenticate-user-actions'
 
 describe('reducer', () => {
   it('initial state has authentication status as unknown', () => {
-    expect(initialState).toEqual({ status: 'unknown' })
+    expect(authenticationInitialState).toEqual({ status: 'unknown' })
   })
 
   it('sets status to loading on intent to authenticate', () => {
     const newState = authenticationReducer(
-      initialState,
+      authenticationInitialState,
       authenticateUserActions.intention({
         user: { email: 'someemail@email.com', password: 'somePassword' },
       })
@@ -21,7 +24,7 @@ describe('reducer', () => {
 
   it('sets status to loading on intent to authenticate while keeping existing user', () => {
     const stateAfterAuthentication = authenticationReducer(
-      initialState,
+      authenticationInitialState,
       authenticateUserActions.success({
         user: { email: 'someemail@email.com', password: 'somePassword' },
       })
@@ -40,7 +43,7 @@ describe('reducer', () => {
 
   it('adds user to authentication status when login is successful', () => {
     const newState = authenticationReducer(
-      initialState,
+      authenticationInitialState,
       authenticateUserActions.success({
         user: { email: 'someemail@email.com', name: 'User Name' },
       })
@@ -53,7 +56,7 @@ describe('reducer', () => {
 
   it('adds error to authentication status when login fails', () => {
     const newState = authenticationReducer(
-      initialState,
+      authenticationInitialState,
       authenticateUserActions.failure({
         error: 'someError',
         origin: 'client',

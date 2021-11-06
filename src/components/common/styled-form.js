@@ -15,6 +15,12 @@ const InputField = styled.div`
     line-height: 2em;
     text-align: center;
     font-weight: bold;
+
+    :disabled {
+      background-color: #222222;
+      color: #666666;
+      transition: all 0.5s ease-in-out;
+    }
   }
 `
 
@@ -24,14 +30,23 @@ const ErrorMessage = styled.div`
   font-weight: bold;
 `
 
-const SubmitButton = styled.input`
+const Button = styled.input`
   background-color: white;
+  color: black;
+  font-weight: bold;
   border-radius: 8px;
   border: none;
   line-height: 2em;
   padding: 0 16px;
   min-width: 100px;
   margin: 2px 0;
+  transition: all 0.2s ease-in-out;
+
+  :disabled {
+    background-color: #222222;
+    color: #666666;
+    transition: all 0.5s ease-in-out;
+  }
 `
 
-export { SubmitButton, ErrorMessage, InputField }
+export { Button, ErrorMessage, InputField }
