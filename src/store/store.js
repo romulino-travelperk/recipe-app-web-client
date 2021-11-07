@@ -1,10 +1,9 @@
 import { createContext, useReducer } from 'react'
 import {
-  authenticationInitialState as authenticationInitialState,
+  authenticationInitialState,
   authenticationReducer,
 } from '../core/authentication/reducer/authentication-reducer'
 import { applySideEffectsMiddleware } from './side-effects-middleware'
-import addSideEffectsToStore from './add-side-effects-to-store'
 import combineReducers from './combine-reducers'
 import { recipesReducer, recipesInitialState } from '../core/recipes/recipes'
 import { tagsInitialState, tagsReducer } from '../core/tags/tags'

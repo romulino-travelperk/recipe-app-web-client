@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 const RequiresAuthentication = ({ children }) => {
-  const { dispatch, state } = useContext(StoreContext)
+  const { state } = useContext(StoreContext)
   if (state.authentication.user) {
     return { ...children }
   }
