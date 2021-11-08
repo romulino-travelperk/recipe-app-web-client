@@ -1,0 +1,7 @@
+.git
+.messages
+.scannerwork
+.vscode
+build
+node_modules
+tmp
